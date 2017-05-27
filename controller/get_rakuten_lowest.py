@@ -29,6 +29,11 @@ def get_rakuten_lowest(url):
 
     price = format_price(lowest_item.find("span", class_="itemPrice3").text)
     point = format_point(lowest_item.find("span", class_="pointGet").text)
-    message = lowest_item.find("span", class_="shipfree").text
+
+    try:
+        message = lowest_item.find("span", class_="shipfree").text
+    except:
+        message = ""
+
 
     return dict(name=name, url=url, price=price, point=point, message=message)

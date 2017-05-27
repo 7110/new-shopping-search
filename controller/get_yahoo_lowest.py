@@ -33,6 +33,9 @@ def get_yahoo_lowest(jan):
     price = format_price(lowest_price.find("li", class_="elItemPrice").em.text)
     point = format_point(lowest_price.find("li", class_="elItemPoint").text)
 
-    message = lowest_price.find("li", class_="elItemShipping").em.text
+    try:
+        message = lowest_price.find("li", class_="elItemShipping").em.text
+    except:
+        message = ""
 
     return dict(name=name, url=url, image=image, price=price, point=point, message=message)
