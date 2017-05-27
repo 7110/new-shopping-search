@@ -10,15 +10,11 @@ def get_soup(url):
     html = response.read()
     return BeautifulSoup(html, "lxml")
 
-def format_price(price):
+def format_number(number, sign):
     res = ""
-    for n in price:
-        res += n.replace(",", "").replace(" ", "").replace("円", "")
+    for n in number.replace(sign, ""):
+        res += n.replace(",", "").replace(" ", "")
     return int(res)
-
-def format_point(point):
-    point = point.replace(",", "").replace(" ", "").replace("ポイント", "")
-    return format_price(point)
 
 
 def get_jan(keyword):
@@ -58,8 +54,8 @@ def get_yahoo_lowest(jan):
     url = a_tag.attrs["href"]
     image = a_tag.img.attrs["src"]
 
-    price = format_price(lowest_price.find("li", class_="elItemPrice").em.text)
-    point = format_point(lowest_price.find("li", class_="elItemPoint").text)
+    price = format_number(lowest_price.find("li", class_="elItemPrice").em.text, "円")
+    point = format_number(lowest_price.find("li", class_="elItemPoint").text, "ポイント")
 
     try:
         message = lowest_price.find("li", class_="elItemShipping").em.text
@@ -97,8 +93,8 @@ def get_rakuten_lowest(url):
     name = a_tag.text
     url = a_tag.attrs["href"]
 
-    price = format_price(lowest_item.find("span", class_="itemPrice3").text)
-    point = format_point(lowest_item.find("span", class_="pointGet").text)
+    price = format_number(lowest_item.find("span", class_="itemPrice3").text, "円")
+    point = format_number(lowest_item.find("span", class_="pointGet").text, "ポイント")
 
     try:
         message = lowest_item.find("span", class_="shipfree").text
