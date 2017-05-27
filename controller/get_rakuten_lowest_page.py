@@ -2,12 +2,15 @@ import urllib.request
 from bs4 import BeautifulSoup
 
 
-def get_rakuten_lowest_page(jan):
-    url = 'http://search.rakuten.co.jp/search/mall/{}/'.format(jan)
+def get_soup(url):
     req = urllib.request.Request(url)
     response = urllib.request.urlopen(req)
     html = response.read()
-    soup = BeautifulSoup(html, "lxml")
+    return BeautifulSoup(html, "lxml")
+
+def get_rakuten_lowest_page(jan):
+    url = 'http://search.rakuten.co.jp/search/mall/{}/'.format(jan)
+    soup = get_soup(url)
 
     items = soup.find_all("div", class_="rsrSResultSect")
 

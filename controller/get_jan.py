@@ -2,12 +2,15 @@ import urllib.request
 from bs4 import BeautifulSoup
 
 
-def get_jan(keyword):
-    url = 'http://askillers.com/jan/?index=1&word={}/'.format(urllib.parse.quote(keyword))
+def get_soup(url):
     req = urllib.request.Request(url)
     response = urllib.request.urlopen(req)
     html = response.read()
-    soup = BeautifulSoup(html, "lxml")
+    return BeautifulSoup(html, "lxml")
+
+def get_jan(keyword):
+    url = 'http://askillers.com/jan/?index=1&word={}/'.format(urllib.parse.quote(keyword))
+    soup = get_soup(url)
 
     items = soup.find_all("div", class_="item")
 
