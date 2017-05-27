@@ -1,0 +1,8 @@
+# Mac OS
+.DS_Store
+
+# virtualenv
+**/env/**
+
+# jupyter
+.ipynb_checkpoints/*
