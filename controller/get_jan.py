@@ -1,5 +1,9 @@
+import urllib.request
+from bs4 import BeautifulSoup
+
+
 def get_jan(keyword):
-    url = 'http://askillers.com/jan/?index=1&word=' + urllib.parse.quote(keyword)
+    url = 'http://askillers.com/jan/?index=1&word={}/'.format(urllib.parse.quote(keyword))
     req = urllib.request.Request(url)
     response = urllib.request.urlopen(req)
     html = response.read()

@@ -1,3 +1,7 @@
+import urllib.request
+from bs4 import BeautifulSoup
+
+
 def format_price(price):
     res = ""
     for n in price:
@@ -9,7 +13,7 @@ def format_point(point):
     return format_price(point)
 
 def get_yahoo_lowest(jan):
-    url =  'http://shopping.yahoo.co.jp/product/j/{}/compare.html'.format(jan)
+    url = 'http://shopping.yahoo.co.jp/product/j/{}/compare.html'.format(jan)
     req = urllib.request.Request(url)
     response = urllib.request.urlopen(req)
     html = response.read()
