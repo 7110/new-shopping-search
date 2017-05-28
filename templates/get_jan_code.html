@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  {% if not jan %}
+  <title>検索ワードを確認してもう一度検索してください！</title>
+  {% else %}
+  <title>お探しの商品をお選びください！</title>
+  {% endif %}
+  <style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: #333333;
+  }
+  @media only screen and (device-height: 667px),
+  only screen and (device-width: 667px) {
+    * {
+      width: 100%;
+    }
+  }
+  .Content {
+    margin: 0 auto;
+    padding: 0 0px;
+    text-align: center;
+  }
+  .Content h2 {
+    margin-bottom: 10px;
+    padding: 20px 0;
+    background-color: rgba(59, 89, 152, 0.3);
+  }
+  .Content h3 {
+    margin: 15px 0;
+  }
+  .JAN {
+    width:: 100%;
+    margin: 0 auto;
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .JAN__item {
+    width: 180px;
+    margin: 1px;
+    border: 1px solid #DADADA;
+  }
+  .JAN__item label {
+    cursor: pointer;
+    cursor: hand;
+  }
+  .JAN__item input {
+    display: none;
+  }
+  .JAN__item div {
+    width: 178px;
+    height: 178px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  .JAN__item p {
+    margin-top: 10px;
+    padding: 10px;
+  }
+  .JAN__item:focus, .JAN__item:hover {
+    border: 1px solid #00F;
+    background-color: rgba(00, 100, 255, 0.1);
+  }
+  form.search {
+    margin: 15px 0;
+    text-align: center;
+  }
+  form.search input.text {
+    height: 38px;
+    padding: 0 6em 0 10px;
+    font-size: inherit;
+    color: #333333;
+    line-height: 38px;
+    vertical-align: middle;
+    border-radius: 2.75px 0 0 2.75px;
+  }
+  form.search input.submit {
+    height: 38px;
+    padding: 0 7px;
+    color: #FFFFFF;
+    font-size: 15px;
+    font-weight: bold;
+    letter-spacing: .2em;
+    word-wrap: normal;
+    word-break: normal;
+    overflow: hidden;
+    white-space: nowrap;
+    line-height: inherit;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+    cursor: pointer;
+    border-radius: 0 2.75px 2.75px 0;
+    background: #FF9000;
+  }
+  </style>
+</head>
+
+<body>
+  {% block body %}
+  <div class="Content">
+    {%- if not jan %}
+      <h2>お探しの商品が見つかりませんでした。検索ワードを確認してもう一度検索してください。</h2>
+    {%- else %}
+      <h2>お探しの商品を選択して、詳細データの表示まで少しお待ちください</h2>
+      <form action="{{ url_for('search') }}" method="post">
+        {% with messages = get_flashed_messages() %}
+          {%- if messages %}
+            <h3>{{ messages[-1] }} の検索結果</h3>
+          {%- endif %}
+        {% endwith %}
+        <ul class="JAN">
+          {%- for j in jan %}
+          <li class="JAN__item">
+            <label>
+              <input type="submit" name="select_jan" value="{{ j.jan }}">
+              <div style="background-image: url({{ j.image }});"></div>
+              <p>{{ j.name[: 60] }}</p>
+            </label>
+          </li>
+          {%- endfor %}
+        </ul>
+      </form>
+
+    {%- endif %}
+    <form action="{{ url_for('get_jan_code') }}" method="post" class="search">
+      {% with messages = get_flashed_messages() %}
+        {%- if messages %}
+          <input type="text" size="50" name="keyword" placeholder="何をお探しですか？" value="{{ messages[-1] }}" class="text">
+        {%- else %}
+          <input type="text" size="50" name="keyword" placeholder="何をお探しですか？" class="text">
+        {%- endif %}
+      {% endwith %}
+      <input type="submit" value="検索する" class="submit">
+    </form>
+  </div>
+  {% endblock %}
+</body>
+</html>
