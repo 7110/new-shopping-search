@@ -107,3 +107,20 @@ def get_rakuten_lowest(url):
         message = ""
 
     return dict(name=name, url=url, image=image, price=price, point=point, message=message, platform="楽天市場")
+
+
+def judge_platform(yahoo, rakuten, point):
+    if point:
+        difference = (rakuten["price"] - rakuten["point"]) - (yahoo["price"] - yahoo["point"])
+    else:
+        difference = rakuten["price"] - yahoo["price"]
+
+    text = '{0}の方が{1}より<span class="price">{2}円</span>お得！'
+    if difference >= 0:
+        text = text.format('<span class="yahoo">Yahoo!ショッピング</span>', '<span class="rakuten">楽天市場</span>', difference)
+        judgement = ["yahoo", text]
+    else:
+        text = text.format('<span class="rakuten">楽天市場</span>', '<span class="yahoo">Yahoo!ショッピング</span>', difference)
+        judgement = ["rakuten", text]
+
+    return judgement
