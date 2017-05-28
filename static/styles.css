@@ -6,12 +6,6 @@
   box-sizing: border-box;
   color: #333333;
 }
-@media only screen and (device-height: 667px),
-only screen and (device-width: 667px) {
-  * {
-    width: 100%;
-  }
-}
 form.search {
   margin: 50px 0 15px 0;
   text-align: center;
@@ -59,33 +53,33 @@ form.search input.submit {
   font-size: 1.2em;
   color: #FF0000;
 }
-h1 {
+.Product h1 {
   margin: 30px 0 50px 0;
   font-size: 28px;
   font-weight: 700;
   text-align: center;
   vertical-align: bottom;
 }
-h1 img {
+.Product h1 img {
   width: auto;
   height: 50px;
   margin: 0 10px;
   vertical-align: middle;
 }
-h3, h4 {
+.Product h3, h4 {
   margin: 30px 0;
   font-weight: normal;
   text-align: center;
 }
-h3 span:first-child, h4 span:first-child {
+.Product h3 span:first-child, .Product h4 span:first-child {
   font-size: 1.2em;
 }
-h3:after {
+.Product h3:after {
   margin-left: 5px;
   font-size: 0.7em;
   content: "（ポイント換算比）";
 }
-h4:after {
+.Product h4:after {
   margin-left: 3px;
   font-size: 0.7em;
   content: "（販売価格比）";
@@ -200,3 +194,28 @@ h4:after {
   border: 1px solid #00F;
   background-color: rgba(00, 100, 255, 0.1);
 }
+  .top {
+    margin-top: 150px;
+    padding: 10px;
+  }
+  .top h1 {
+    margin: 30px 0 50px 0;
+    font-size: 28px;
+    font-weight: 700;
+    text-align: center;
+    vertical-align: bottom;
+  }
+  .top h1 img {
+    width: auto;
+    height: 50px;
+    margin: 0 10px;
+    vertical-align: middle;
+  }
+  @media only screen and (max-width: 480px) {
+    * {
+      width: 100%;
+    }
+    form.search input.text {
+        width: 100% !important;
+    }
+  }
