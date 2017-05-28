@@ -14,6 +14,9 @@ from controller import (
 
 
 app = Flask(__name__)
+app.config['SESSION_TYPE'] = 'filesystem'
+app.config['SECRET_KEY'] = os.urandom(24)
+Session(app)
 
 
 @app.route("/")
@@ -61,7 +64,4 @@ def search():
 
 
 if __name__ == "__main__":
-    app.config['SESSION_TYPE'] = 'filesystem'
-    app.config['SECRET_KEY'] = os.urandom(24)
-    Session(app)
     app.run()
