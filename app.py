@@ -1,6 +1,8 @@
 # coding: utf-8
 
+import os
 from flask import Flask, request, render_template, flash
+from flask_session import Session
 
 from controller import (
     get_jan,
@@ -59,4 +61,7 @@ def search():
 
 
 if __name__ == "__main__":
+    app.config['SESSION_TYPE'] = 'filesystem'
+    app.config['SECRET_KEY'] = os.urandom(24)
+    Session(app)
     app.run()
