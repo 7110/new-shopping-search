@@ -18,26 +18,30 @@ def format_number(number, sign):
 
 
 def get_jan(keyword):
-    url = 'http://askillers.com/jan/?index=1&word={}/'.format(urllib.parse.quote(keyword))
-    soup = get_soup(url)
-
-    items = soup.find_all("div", class_="item")
-
     item_list = []
-    for item in items:
-        try:
-            item_texts = item.find_all("div")[-1].text
-            name = item_texts.split("\n\t")[1]
-            jan = item_texts.split("\n\t")[2].replace("JAN/EAN:", "")
+    for i in range(2):
+        url = 'http://askillers.com/jan/?index={0}&word={1}/'.format(i+1, urllib.parse.quote(keyword))
+        soup = get_soup(url)
 
+        items = soup.find_all("div", class_="item")
+
+        for item in items:
             try:
-                image = item.img.attrs["src"]
-            except:
-                image = ""
+                item_texts = item.find_all("div")[-1].text
+                name = item_texts.split("\n\t")[1]
+                jan = item_texts.split("\n\t")[2].replace("JAN/EAN:", "")
 
-            item_list += [dict(name=name, jan=jan, image=image)]
-        except:
-            pass
+                try:
+                    image = item.img.attrs["src"].replace("SL75", "SL200")
+                except:
+                    image = ""
+
+                if not image:
+                    image = "https://5svbqa.dm2302.livefilestore.com/y4mpKgYWEBbDosjMNCVgY4wilQDn8k0EICNdM7YDUkqpgF8h062iXiGqiQfzJNWbdhACEHDHZH-UUoJVU5E-Kwe4mCIrpFYGPMw1yNTfzitAF59P7a3JnZZqOB2K8d6FI8WQ4KbXy-56nqsImYc3BVmtxw702o44B_2g7r2C_yIc60S7xRxbROelwuS9ybC500k0Pi8jeVgUlhq3pNI_j9EuQ?width=200&height=200&cropmode=none"
+
+                item_list += [dict(name=name, jan=jan, image=image)]
+            except:
+                pass
 
     return item_list
 
@@ -62,7 +66,7 @@ def get_yahoo_lowest(jan):
     except:
         message = ""
 
-    return dict(name=name, url=url, image=image, price=price, point=point, message=message)
+    return dict(name=name, url=url, image=image, price=price, point=point, message=message, platform="Yahoo!ショッピング")
 
 
 def get_rakuten_lowest_page(jan):
@@ -89,6 +93,7 @@ def get_rakuten_lowest(url):
 
     lowest_item = soup.find("tr", class_="specColumnUsed")
 
+    image = soup.find("div", class_="itemThumb").img.attrs["src"]
     a_tag = lowest_item.find("div", class_="quickViewIteminfo").a
     name = a_tag.text
     url = a_tag.attrs["href"]
@@ -101,4 +106,4 @@ def get_rakuten_lowest(url):
     except:
         message = ""
 
-    return dict(name=name, url=url, price=price, point=point, message=message)
+    return dict(name=name, url=url, image=image, price=price, point=point, message=message, platform="楽天市場")
