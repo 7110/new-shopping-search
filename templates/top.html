@@ -5,72 +5,31 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>お得なショッピングを楽しもう！</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
   <style>
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    color: #333333;
+  .top {
+    margin-top: 150px;
+    padding: 10px;
   }
-  @media only screen and (device-height: 667px),
-  only screen and (device-width: 667px) {
-    * {
-      width: 100%;
-    }
-  }
-  form.search {
-    margin: 50px 0 15px 0;
-    text-align: center;
-  }
-  form.search input.text {
-    height: 38px;
-    padding: 0 6em 0 10px;
-    font-size: inherit;
-    color: #333333;
-    line-height: 38px;
-    vertical-align: middle;
-    border-radius: 2.75px 0 0 2.75px;
-  }
-  form.search input.submit {
-    height: 38px;
-    padding: 0 7px;
-    color: #FFFFFF;
-    font-size: 15px;
-    font-weight: bold;
-    letter-spacing: .2em;
-    word-wrap: normal;
-    word-break: normal;
-    overflow: hidden;
-    white-space: nowrap;
-    line-height: inherit;
-    text-overflow: ellipsis;
-    vertical-align: middle;
-    cursor: pointer;
-    border-radius: 0 2.75px 2.75px 0;
-    background: #FF9000;
-  }
-  h1 {
+  .top h1 {
     margin: 30px 0 50px 0;
     font-size: 28px;
     font-weight: 700;
     text-align: center;
     vertical-align: bottom;
   }
-  h1 img {
+  .top h1 img {
     width: auto;
     height: 50px;
     margin: 0 10px;
     vertical-align: middle;
-  }
-  .main {
-    padding: 100px 20px;
   }
   </style>
 </head>
 
 <body>
   {% block body %}
-  <div class="main">
+  <div class="top">
     <h1>
       <img src="https://s.yimg.jp/c/logo/f/2.0/shopping_r_34_2x.png" alt="">と<img src="https://s.yimg.jp/images/serp/ws/wsbc/lg_01c_1.png" alt="">で比較しよう
     </h1>
